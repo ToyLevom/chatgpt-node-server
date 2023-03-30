@@ -69,14 +69,14 @@ const handleSubmit = async (e) => {
   chatContainer.innerHTML += chatStripe(true, " ", uniqueId);
 
   // 滚动到底
-  chatContainer.scrollTo = chatContainer.scrollHeight;
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 
   // 在机器人输出框中设置loading效果
   const messageDiv = document.getElementById(uniqueId);
   loader(messageDiv);
 
   // 请求机器人回答
-  const response = await fetch("http://localhost:8888", {
+  const response = await fetch("https://my-chatgpt-node-server.onrender.com/", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
@@ -90,7 +90,7 @@ const handleSubmit = async (e) => {
   messageDiv.innerHTML = "";
   if (response.ok) {
     const data = await response.json();
-    const parsedData = data.body.bot.trim();
+    const parsedData = data.bot.trim();
 
     typeText(messageDiv, parsedData);
   } else {
